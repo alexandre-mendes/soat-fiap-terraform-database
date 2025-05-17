@@ -1,0 +1,23 @@
+name: Hello World Workflow
+
+# Evento que vai disparar o workflow
+on:
+  push:
+    branches:
+      - main  # Esse workflow vai rodar quando houver um push na branch main
+  pull_request:
+    branches:
+      - main  # Ou quando houver um pull request na branch main
+
+jobs:
+  hello-world-job:
+    runs-on: ubuntu-latest  # Ambiente que o job vai rodar (Ubuntu neste caso)
+    
+    steps:
+      # Passo 1: Fazer checkout do código (obrigatório)
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Passo 2: Exibir "Hello World" no console
+      - name: Say Hello
+        run: echo "Hello, World!"

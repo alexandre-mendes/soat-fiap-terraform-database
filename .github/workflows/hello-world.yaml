@@ -4,10 +4,10 @@ name: Hello World Workflow
 on:
   push:
     branches:
-      - main  # Esse workflow vai rodar quando houver um push na branch main
+      - master  # Esse workflow vai rodar quando houver um push na branch main
   pull_request:
     branches:
-      - main  # Ou quando houver um pull request na branch main
+      - master  # Ou quando houver um pull request na branch main
 
 jobs:
   hello-world-job:

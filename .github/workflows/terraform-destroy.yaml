@@ -22,7 +22,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init -backend-config="path=./terraform.tfstate"
+        run: terraform init
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve

@@ -36,5 +36,8 @@ jobs:
       - name: Validar Terraform
         run: terraform validate
 
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
       - name: Aplicar Terraform (sem prompt)
         run: terraform apply -auto-approve

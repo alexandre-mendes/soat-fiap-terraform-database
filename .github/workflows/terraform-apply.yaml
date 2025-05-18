@@ -1,6 +1,7 @@
-name: Terraform DynamoDB
+name: Terraform Apply - DynamoDB
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master

@@ -1,9 +1,11 @@
 terraform {
-  backend "local" {
-    path = "./terraform.tfstate"
+backend "s3" {
+    bucket         = "soat-terraform-state-2025"
+    key            = "dynamo/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
   }
 }
-
 
 provider "aws" {
   region     = "us-east-1"

@@ -35,7 +35,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   engine                  = "aurora-postgresql"
   engine_version          = "13.9"
   database_name           = "soatdb"
-  master_username         = "admin"
+  master_username         = "auroraadmin"
   master_password         = random_password.master_password.result
   db_subnet_group_name    = aws_db_subnet_group.default.name
   vpc_security_group_ids  = [aws_security_group.aurora_sg.id]

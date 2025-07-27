@@ -11,6 +11,25 @@ provider "aws" {
   region = "us-east-1"
 }
 
+
+//Aurora
+data "aws_vpc" "vpc" {
+  default = true
+}
+
+data "aws_subnets" "subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
+}
+
+data "aws_subnet" "subnet" {
+  for_each = data.aws_subnets.subnets.ids
+  id       = each.value
+}
+
+//Dynamo
 resource "aws_dynamodb_table" "multi" {
   for_each     = var.tabelas
   name         = each.key

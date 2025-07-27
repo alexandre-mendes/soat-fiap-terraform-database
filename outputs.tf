@@ -4,5 +4,5 @@ output "aurora_endpoint" {
 
 output "aurora_password" {
   value     = random_password.master_password.result
-  sensitive = true
+  sensitive = false
 }

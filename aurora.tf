@@ -9,7 +9,7 @@ resource "aws_security_group" "aurora_sg" {
     to_port         = 5432
     protocol        = "tcp"
     security_groups = ["<ID_DO_SECURITY_GROUP_DO_EKS>"]
-    description     = "Permite tráfego do EKS"
+    description     = "Permite trafego do EKS"
   }
 
   egress {

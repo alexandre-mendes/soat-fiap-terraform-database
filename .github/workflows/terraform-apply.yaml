@@ -26,6 +26,12 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
 
+      - name: Update Kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+          --name $CLUSTER_NAME \
+          --region $AWS_REGION
+
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3
         with:

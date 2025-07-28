@@ -9,8 +9,3 @@ variable "tabelas" {
   }))
 }
 
-variable "db_master_password" {
-  description = "A senha mestre para o cluster Aurora."
-  type        = string
-  sensitive   = true
-}

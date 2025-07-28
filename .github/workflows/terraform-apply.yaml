@@ -48,6 +48,8 @@ jobs:
 
       - name: Terraform Plan
         run: TF_LOG=TRACE terraform plan -out=tfplan
+        env:
+          TF_VAR_db_master_password: ${{ secrets.AURORA_MASTER_PASSWORD }}
 
       - name: Aplicar Terraform (sem prompt)
         run: terraform apply "tfplan"

@@ -1,3 +1,9 @@
+data "aws_security_group" "eks_sg" {
+  filter {
+    name   = "group-name"
+    values = ["SG-soat-cluster"]
+  }
+}
 
 resource "aws_security_group" "aurora_sg" {
   name        = "soat-aurora-sg"
@@ -8,7 +14,7 @@ resource "aws_security_group" "aurora_sg" {
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
-    security_groups = [aws_security_group.eks_sg.id]
+    security_groups = [data.aws_security_group.eks_sg.id]
     description     = "Permite trafego do EKS"
   }
 

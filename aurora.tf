@@ -1,7 +1,7 @@
 data "aws_security_group" "eks_sg" {
   filter {
     name   = "group-name"
-    values = ["SG-soat-cluster"]
+    values = ["eks-cluster-sg-soat-cluster-*"]
   }
 }
 

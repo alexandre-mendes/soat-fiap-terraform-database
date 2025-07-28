@@ -1,10 +1,3 @@
-data "aws_security_group" "eks_sg" {
-  filter {
-    name   = "group-name"
-    values = ["SG-soat-cluster"]
-  }
-}
-
 resource "aws_security_group" "aurora_sg" {
   name        = "soat-aurora-sg"
   description = "Permite acesso ao Aurora PostgreSQL"
@@ -27,14 +20,10 @@ resource "aws_security_group" "aurora_sg" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name       = "aurora-subnet-group"
+  name        = "aurora-subnet-group"
   subnet_ids = data.aws_subnets.subnets.ids
 }
 
-resource "random_password" "master_password" {
-  length  = 16
-  special = false
-}
 
 resource "aws_rds_cluster" "aurora_cluster" {
   cluster_identifier      = "soat-aurora-cluster"
@@ -42,15 +31,15 @@ resource "aws_rds_cluster" "aurora_cluster" {
   engine_version          = "13.9"
   database_name           = "soatdb"
   master_username         = "auroraadmin"
-  master_password         = random_password.master_password.result
+  master_password         = var.db_master_password
   db_subnet_group_name    = aws_db_subnet_group.default.name
   vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
   skip_final_snapshot     = true
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
-  identifier              = "soat-aurora-instance"
-  cluster_identifier      = aws_rds_cluster.aurora_cluster.id
-  instance_class          = "db.t3.medium"
-  engine                  = "aurora-postgresql"
+  identifier          = "soat-aurora-instance"
+  cluster_identifier  = aws_rds_cluster.aurora_cluster.id
+  instance_class      = "db.t3.medium"
+  engine              = "aurora-postgresql"
 }

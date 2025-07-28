@@ -51,36 +51,5 @@ jobs:
 
       - name: Aplicar Terraform (sem prompt)
         run: terraform apply -auto-approve
-
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Get Aurora DB Credentials from Secrets Manager
-        id: get_aurora_secret
-        run: |
-          # Obtenha o SecretString completo do Secrets Manager
-          DB_SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id soat-aurora-db-credentials --query SecretString --output text)
-          
-          # Parse o JSON para extrair os valores individuais
-          DB_HOST=$(echo "$DB_SECRET_JSON" | jq -r '.host')
-          DB_USERNAME=$(echo "$DB_SECRET_JSON" | jq -r '.username')
-          DB_PASSWORD=$(echo "$DB_SECRET_JSON" | jq -r '.password')
-          DB_DATABASE=$(echo "$DB_SECRET_JSON" | jq -r '.database')
-          DB_PORT=$(echo "$DB_SECRET_JSON" | jq -r '.port')
-
-          # Exponha as variáveis para os próximos passos
-          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
-          echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
-          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
-          echo "DB_DATABASE=$DB_DATABASE" >> $GITHUB_ENV
-          echo "DB_PORT=$DB_PORT" >> $GITHUB_ENV
-      
-      - name: Create Kubernetes Secret with Aurora DB credentials
-        run: |
-          kubectl create secret generic aurora-db-credentials \
-            --from-literal=DB_HOST=$DB_HOST \
-            --from-literal=DB_USERNAME=$DB_USERNAME \
-            --from-literal=DB_PASSWORD=$DB_PASSWORD \
-            --from-literal=DB_DATABASE=$DB_DATABASE \
-            --from-literal=DB_PORT=$DB_PORT \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          TF_VAR_db_master_password: ${{ secrets.AURORA_MASTER_PASSWORD }}

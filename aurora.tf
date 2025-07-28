@@ -42,7 +42,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   engine_version          = "13.9"
   database_name           = "soatdb"
   master_username         = "auroraadmin"
-  master_password         = random_password.master_password.result
+  master_password         = var.db_master_password
   db_subnet_group_name    = aws_db_subnet_group.default.name
   vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
   skip_final_snapshot     = true

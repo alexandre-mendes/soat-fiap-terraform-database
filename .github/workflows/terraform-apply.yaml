@@ -47,7 +47,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: TF_LOG=TRACE terraform plan -out=tfplan > terraform_plan.log 2>&1
+        run: TF_LOG=TRACE terraform plan -out=tfplan
 
       - name: Aplicar Terraform (sem prompt)
         run: terraform apply "tfplan"

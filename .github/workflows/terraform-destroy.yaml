@@ -26,3 +26,5 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
+        env:
+          TF_VAR_db_master_password: ${{ secrets.AURORA_MASTER_PASSWORD }}
